@@ -1,1 +1,24 @@
-Ansible and paramiko test
+import paramiko
+ssh_client = paramiko.SSHClient()
+
+ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+ssh_client.connect ('192.168.10.15', port=22, username='admin', password='cisco',look_for_keys=False, allow_agent=False)
+# paramiko can use 'exec_command' (one command at a time, then close)  or 'invoke' (interact with shell)
+stdin,stdout, stderr = ssh_client.exec_command('terminal lenght 0 \n')
+stdin,stdout,stderr = ssh_client.exec_command('show run config')
+
+output =stdout.read().decode()
+# print (output)
+
+list = output.split('\n')
+list = list[4: -1]
+config = '\n'.join(list)
+print(config)
+
+
+ssh_client.close()
+
+# write output of the above to a file
+with open ('router1_run_config.txt', w ) as f
+f.write(config)
