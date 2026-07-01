@@ -19,6 +19,6 @@ print(config)
 
 ssh_client.close()
 
-# write output of the above to a file
+# write the output of the above to a file
 with open ('router1_run_config.txt', w ) as f
 f.write(config)
